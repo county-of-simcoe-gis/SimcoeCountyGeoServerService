@@ -9,7 +9,7 @@ Since the GeoServer dev team is no longer able to provide the windows installer 
 
 1. Ensure you have the GEOSERVER_HOME environment variable set.  e.g. c:\geoserver The service will reference the bin folder to run the startup.bat and shutdown.bat.
 2. Clone the repo.
-3. Copy the contents of the compiledExe folder of the repo to a place on your server where the service exe will live on.  Once the service is installed it will reference the location of the GeoServerService.exe to start and stop it.
+3. Copy the contents of the release folder https://github.com/county-of-simcoe-gis/SimcoeCountyGeoServerService/releases to a place on your server where the service exe will live on.  Once the service is installed it will reference the location of the GeoServerService.exe to start and stop it.
 4. Install the Service.  InstallUtil.exe should be part of any recent .Net Framework.  I tested this with v4 of the .Net Framework.
 
 Run the following command as an administrator.
