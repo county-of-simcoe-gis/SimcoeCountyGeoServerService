@@ -7,3 +7,13 @@ D:\0_Projects\Utilites\GeoServerService\GeoServerService\obj\Debug\GeoServerServ
 D:\0_Projects\Utilites\GeoServerService\GeoServerService\obj\Debug\GeoServerService.csproj.CoreCompileInputs.cache
 D:\0_Projects\Utilites\GeoServerService\GeoServerService\obj\Debug\GeoServerService.exe
 D:\0_Projects\Utilites\GeoServerService\GeoServerService\obj\Debug\GeoServerService.pdb
+D:\0_Projects\Utilites\SimcoeCountyGeoServerService\GeoServerService\bin\Debug\GeoServerService.exe.config
+D:\0_Projects\Utilites\SimcoeCountyGeoServerService\GeoServerService\bin\Debug\GeoServerService.exe
+D:\0_Projects\Utilites\SimcoeCountyGeoServerService\GeoServerService\bin\Debug\GeoServerService.pdb
+D:\0_Projects\Utilites\SimcoeCountyGeoServerService\GeoServerService\obj\Debug\GeoServerService.csprojAssemblyReference.cache
+D:\0_Projects\Utilites\SimcoeCountyGeoServerService\GeoServerService\obj\Debug\GeoServerService.GeoServerService.resources
+D:\0_Projects\Utilites\SimcoeCountyGeoServerService\GeoServerService\obj\Debug\GeoServerService.ProjectInstaller.resources
+D:\0_Projects\Utilites\SimcoeCountyGeoServerService\GeoServerService\obj\Debug\GeoServerService.csproj.GenerateResource.cache
+D:\0_Projects\Utilites\SimcoeCountyGeoServerService\GeoServerService\obj\Debug\GeoServerService.csproj.CoreCompileInputs.cache
+D:\0_Projects\Utilites\SimcoeCountyGeoServerService\GeoServerService\obj\Debug\GeoServerService.exe
+D:\0_Projects\Utilites\SimcoeCountyGeoServerService\GeoServerService\obj\Debug\GeoServerService.pdb
