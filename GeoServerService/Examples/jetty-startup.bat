@@ -1,0 +1,1 @@
+java -jar start.jar STOP.PORT=28282 STOP.KEY=secretkey

@@ -11,9 +11,9 @@ using System.Timers;
 using System.Runtime.InteropServices;
 using System.IO;
 
-namespace GeoServerService
+namespace CustomService
 {
-    public partial class GeoServerService : ServiceBase
+    public partial class CustomService : ServiceBase
     {
         enum ServiceState
         {
@@ -45,15 +45,15 @@ namespace GeoServerService
         Timer timer = new Timer();
         int eventId = 1;
 
-        public GeoServerService()
+        public CustomService()
         {
             InitializeComponent();
-
-            if (!EventLog.SourceExists("GeoServerService"))
+            String serviceName = Properties.Settings.Default.ServiceName;
+            if (!EventLog.SourceExists(serviceName))
             {
-                EventLog.CreateEventSource("GeoServerService", "Application");
+                EventLog.CreateEventSource(serviceName, "Application");
             }
-            eventLog1.Source = "GeoServerService";
+            eventLog1.Source = serviceName;
             eventLog1.Log = "Application";
         }
 
@@ -65,40 +65,35 @@ namespace GeoServerService
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
             timer.Start();
-
-            
-            // CHECK FOR ENV VARIABLE
-            if (Environment.GetEnvironmentVariable("GEOSERVER_HOME") == null)
-            {
-                serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
-                SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-                String msg = "ERROR:  Environment variable: GEOSERVER_HOME not found.  Bailing.";
-                eventLog1.WriteEntry(msg, EventLogEntryType.Error);
-                throw new Exception(msg);
-            }
-
-            String startupBat = Path.Combine(Environment.GetEnvironmentVariable("GEOSERVER_HOME"), "bin", "startup.bat");
+            String workingDirectory = Properties.Settings.Default.WorkingDir;
+            String startupBat = Properties.Settings.Default.StartupPath;
+            String serviceName = Properties.Settings.Default.ServiceName;
 
             // CHECK IF STARTUP BAT EXISTS
             if (!File.Exists(startupBat))
             {
                 serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
                 SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-                String msg = "ERROR:  Cannot find GeoServer startup bat located at: " + startupBat + "\rPlease Ensure your environment variable for GEOSERVER_HOME is set properly.";
+                String msg = "ERROR:  Cannot find startup file located at: " + startupBat + "\rPlease Ensure your file exists.";
                 eventLog1.WriteEntry(msg, EventLogEntryType.Error);
                 throw new Exception(msg);
 
+            } else if (!Directory.Exists(workingDirectory)) {
+                serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
+                SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+                String msg = "ERROR:  Cannot find working directory located at: " + workingDirectory + "\rPlease Ensure your folder exists.";
+                eventLog1.WriteEntry(msg, EventLogEntryType.Error);
+                throw new Exception(msg);
             } else
             {
-                eventLog1.WriteEntry("Starting GeoServer located at: " + startupBat);
-
+                eventLog1.WriteEntry("Starting " + serviceName + " located at: " + startupBat);
                 try
                 {
                     Process myProcess = new Process();
                     myProcess.StartInfo.UseShellExecute = true;
                     myProcess.StartInfo.FileName = startupBat;
                     myProcess.StartInfo.CreateNoWindow = true;
-                    myProcess.StartInfo.WorkingDirectory = Path.Combine(Environment.GetEnvironmentVariable("GEOSERVER_HOME"), "bin");
+                    myProcess.StartInfo.WorkingDirectory = workingDirectory;
                     myProcess.Start();
                 }
                 catch (Exception e)
@@ -128,11 +123,13 @@ namespace GeoServerService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_STOP_PENDING;
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+            String workingDirectory = Properties.Settings.Default.WorkingDir;
+            String shutdownBat = Properties.Settings.Default.ShutdownPath;
+            String serviceName = Properties.Settings.Default.ServiceName;
 
-            String shutdownBat = Path.Combine(Environment.GetEnvironmentVariable("GEOSERVER_HOME"), "bin", "shutdown.bat");
             try
             {
-                eventLog1.WriteEntry("Stopping GeoServer");
+                eventLog1.WriteEntry("Stopping " + serviceName);
 
                 Console.WriteLine(shutdownBat);
 
@@ -140,7 +137,7 @@ namespace GeoServerService
                 myProcess.StartInfo.UseShellExecute = true;
                 myProcess.StartInfo.FileName = shutdownBat;
                 myProcess.StartInfo.CreateNoWindow = true;
-                myProcess.StartInfo.WorkingDirectory = Path.Combine(Environment.GetEnvironmentVariable("GEOSERVER_HOME"), "bin");
+                myProcess.StartInfo.WorkingDirectory = workingDirectory;
                 myProcess.Start();
             }
             catch (Exception e)

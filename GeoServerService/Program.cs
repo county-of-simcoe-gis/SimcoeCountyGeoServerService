@@ -5,7 +5,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeoServerService
+namespace CustomService
 {
     static class Program
     {
@@ -17,7 +17,7 @@ namespace GeoServerService
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new GeoServerService()
+                new CustomService()
             };
             ServiceBase.Run(ServicesToRun);
         }

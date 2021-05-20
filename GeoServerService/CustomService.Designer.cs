@@ -1,6 +1,6 @@
-﻿namespace GeoServerService
+﻿namespace CustomService
 {
-    partial class GeoServerService
+    partial class CustomService
     {
         /// <summary> 
         /// Required designer variable.

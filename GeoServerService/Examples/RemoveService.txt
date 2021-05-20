@@ -1,0 +1,1 @@
+Powershell Remove-Service -Name "GeoServer"

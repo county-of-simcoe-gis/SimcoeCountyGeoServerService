@@ -1,0 +1,1 @@
+Powershell New-Service -Name "GeoServer" -DisplayName "GeoServer" -Description "Custom GeoServer Service" -BinaryPathName "C:\GIS\GeoServerService\CustomService.exe"

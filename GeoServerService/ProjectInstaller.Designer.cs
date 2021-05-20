@@ -1,4 +1,4 @@
-﻿namespace GeoServerService
+﻿namespace CustomService
 {
     partial class ProjectInstaller
     {
@@ -39,9 +39,9 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.Description = "Custom GeoServer Service";
-            this.serviceInstaller1.DisplayName = "GeoServer";
-            this.serviceInstaller1.ServiceName = "GeoServerService";
+            this.serviceInstaller1.Description = "Custom " + Properties.Settings.Default.ServiceName + " Service";
+            this.serviceInstaller1.DisplayName = Properties.Settings.Default.ServiceName;
+            this.serviceInstaller1.ServiceName = Properties.Settings.Default.ServiceName + "Service";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
