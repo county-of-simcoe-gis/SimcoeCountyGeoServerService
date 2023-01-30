@@ -64,7 +64,8 @@ namespace CustomService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-            timer.Start();
+            if (Properties.Settings.Default.MonitorDelay != null && Properties.Settings.Default.MonitorDelay > 0)
+                timer.Start();
             String workingDirectory = Properties.Settings.Default.WorkingDir;
             String startupBat = Properties.Settings.Default.StartupPath;
             String serviceName = Properties.Settings.Default.ServiceName;
@@ -102,11 +103,12 @@ namespace CustomService
                     throw;
                 }
 
-
-                // Set up a timer that triggers every minute.
-                timer.Interval = 60000; // 60 seconds
-                timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
-
+                if (Properties.Settings.Default.MonitorDelay != null && Properties.Settings.Default.MonitorDelay > 0)
+                {
+                    // Set up a timer that triggers every minute.
+                    timer.Interval = Properties.Settings.Default.MonitorDelay; // 60 seconds
+                    timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
+                }
                 // Update the service state to Running.
                 serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
                 SetServiceStatus(this.ServiceHandle, ref serviceStatus);
@@ -154,8 +156,29 @@ namespace CustomService
 
         public void OnTimer(object sender, ElapsedEventArgs args)
         {
-            // TODO: Insert monitoring activities here.
-            //eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
+            //Run Monitoring Task
+            String workingDirectory = Properties.Settings.Default.WorkingDir;
+            String monitorBat = Properties.Settings.Default.MonitorPath;
+            String serviceName = Properties.Settings.Default.ServiceName;
+
+            try
+            {
+                eventLog1.WriteEntry("Running Monitor Process " + serviceName);
+
+                Console.WriteLine(monitorBat);
+
+                Process myProcess = new Process();
+                myProcess.StartInfo.UseShellExecute = true;
+                myProcess.StartInfo.FileName = monitorBat;
+                myProcess.StartInfo.CreateNoWindow = true;
+                myProcess.StartInfo.WorkingDirectory = workingDirectory;
+                myProcess.Start();
+            }
+            catch (Exception e)
+            {
+                eventLog1.WriteEntry(e.ToString());
+                throw;
+            }
         }
     }
 }

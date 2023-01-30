@@ -1,3 +1,5 @@
 /GeoServerService/bin
 /GeoServerService/obj
 /.vs
+/GeoServerService/publish
+/GeoServerService/GeoServerService_TemporaryKey.pfx

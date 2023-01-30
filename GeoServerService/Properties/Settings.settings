@@ -14,5 +14,11 @@
     <Setting Name="WorkingDir" Type="System.String" Scope="Application">
       <Value Profile="(Default)">c:\geoserver\bin</Value>
     </Setting>
+    <Setting Name="MonitorPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\geoserver\bin\monitor.bat</Value>
+    </Setting>
+    <Setting Name="MonitorDelay" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">60000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

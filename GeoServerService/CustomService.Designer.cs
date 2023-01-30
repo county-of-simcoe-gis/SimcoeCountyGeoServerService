@@ -32,7 +32,7 @@
             // GeoServerService
             // 
             this.CanShutdown = true;
-            this.ServiceName = "GeoServerService";
+            this.ServiceName = Properties.Settings.Default.ServiceName;
 
         }
 
